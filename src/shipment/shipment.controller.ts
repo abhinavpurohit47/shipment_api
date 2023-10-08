@@ -10,6 +10,7 @@ import {
 import { CreateShipment } from './createShipment.dto';
 import { ShipmentService } from './shipment.service';
 import { Response } from 'express';
+import { generateGuid } from 'src/utils/guid.util';
 
 @Controller('shipment')
 export class ShipmentController {
@@ -31,7 +32,10 @@ export class ShipmentController {
   }
   @Post('/create')
   createShipment(@Body() shipment: CreateShipment, @Res() res: any) {
-    const guid = this.shipmentService.createShipment(shipment);
+    const guid = generateGuid();
+    shipment.ship_id = guid;
+    const createdShipment = this.shipmentService.createShipment(shipment);
     res.status(201).json({ guid });
+    return createdShipment + 'abd';
   }
 }
