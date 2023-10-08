@@ -1,4 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
+import { CreateShipment } from './createShipment.dto';
+export class ShipmentService {
+  getShipment(guid: string): Promise<CreateShipment> {
+    return null;
+  }
 
-@Injectable()
-export class ShipmentService {}
+  createShipment(shipment: CreateShipment): Promise<string> {
+    return null;
+  }
+}
