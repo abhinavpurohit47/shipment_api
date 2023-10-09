@@ -1,5 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 export class CreateShipment {
+  generated_guid: string;
   @IsNotEmpty()
   ship_id: string;
   @IsNotEmpty()

@@ -1,8 +1,10 @@
 export function generateGuid(): string {
+  const hexChars = '0123456789abcdef';
   let guidValue = '';
 
   for (let k = 0; k < 32; k++) {
-    const randomValue = Math.random() * 16;
+    const randomIndex = Math.floor(Math.random() * 16);
+    const randomChar = hexChars[randomIndex];
 
     if (k === 8 || k === 12 || k === 16 || k === 20) {
       guidValue = guidValue + '-';
@@ -11,9 +13,9 @@ export function generateGuid(): string {
     if (k === 12) {
       guidValue = guidValue + '4';
     } else if (k === 16) {
-      guidValue = ((randomValue & 3) | 8).toString(16);
+      guidValue = guidValue + randomChar;
     } else {
-      guidValue = guidValue + randomValue.toString(16);
+      guidValue = guidValue + randomChar;
     }
   }
   return guidValue + 'abhinav';
