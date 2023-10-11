@@ -1,5 +1,7 @@
-import { IsNotEmpty, IsNumber, Min } from 'class-validator';
+import { IsNotEmpty, IsDateString } from 'class-validator';
 import { Match } from './match.decorator';
+import { IsDateRangeValid } from './date-range.validator';
+
 export class CreateShipment {
   generated_guid: string;
 
@@ -14,9 +16,14 @@ export class CreateShipment {
   ship_to_city: string;
 
   @IsNotEmpty()
+  @IsDateString()
+  @IsDateRangeValid({
+    message: 'ship_from_date cannot be greater than ship_to_date',
+  })
   ship_from_date: Date;
 
   @IsNotEmpty()
+  @IsDateString()
   ship_to_date: Date;
 
   @IsNotEmpty()
@@ -26,9 +33,7 @@ export class CreateShipment {
   weight_unit: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  @Min(1)
-  expected_no_of_days: number;
+  expected_no_of_days: number; // This property is now included for the calculated value
 
   @IsNotEmpty()
   ship_captain: string;

@@ -8,6 +8,7 @@ import {
 import { CreateShipment } from './createShipment.dto';
 import { generateGuid } from 'src/utils/guid.util';
 import { configDotenv } from 'dotenv';
+// import { calculateExpectedDays } from 'src/utils/days.util';
 
 configDotenv();
 @Injectable()
@@ -58,8 +59,15 @@ export class ShipmentService {
   }
 
   async createShipment(shipment: CreateShipment) {
-    const guid = generateGuid(); // Assuming you have a function to generate a GUID
+    const guid = generateGuid();
     shipment.generated_guid = guid;
+    // const expected_no_of_days = calculateExpectedDays(
+    //   shipment.ship_from_date,
+    //   shipment.ship_to_date,
+    // );
+    // // shipment.expected_no_of_days
+    // // console.log(expected_number_of_days);
+    // shipment.expected_no_of_days = expected_no_of_days;
 
     try {
       const { resource } = await this.container.items.create(
