@@ -18,5 +18,5 @@ export function generateGuid(): string {
       guidValue = guidValue + randomChar;
     }
   }
-  return guidValue + 'abhinav';
+  return guidValue;
 }

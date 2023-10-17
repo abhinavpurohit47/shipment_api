@@ -6,10 +6,13 @@ import {
   Res,
   Param,
   Logger,
+  Delete,
+  Put,
 } from '@nestjs/common';
 import { ShipmentService } from './shipment.service';
 import { Response } from 'express';
 import { CreateShipment } from './createShipment.dto';
+import { UpdateShipment } from './updateShipment.dto';
 
 @Controller('shipment')
 export class ShipmentController {
@@ -24,6 +27,40 @@ export class ShipmentController {
 
       this.logger.log(`Successfully retrieved shipment with GUID: ${guid}`);
       return res.status(200).json(shipment);
+    } catch (error) {
+      this.logger.error(`Error retrieving shipment: ${error.message}`);
+      return res.status(error.status || 500).json({ error: error.message });
+    }
+  }
+
+  @Put('/:guid')
+  async updateShipment(
+    @Param('guid') guid: string,
+    @Body() updateData: UpdateShipment,
+    @Res() res: Response,
+  ) {
+    try {
+      const updatedShipment = await this.shipmentService.updateShipmentByGuid(
+        guid,
+        updateData,
+      );
+      this.logger.log(`Successfully updated shipment with GUID: ${guid}`);
+      return res.status(200).json(updatedShipment);
+    } catch (error) {
+      this.logger.log(`Error updating shipment: ${error.message}`);
+      return res.status(500).json({ error: error.message });
+    }
+  }
+
+  @Delete('/:guid')
+  async deleteShipment(@Param('guid') guid: string, @Res() res: Response) {
+    try {
+      const deleted = await this.shipmentService.deleteShipmentByGuid(guid);
+
+      if (deleted) {
+        this.logger.log(`Successfully deleted shipment with GUID: ${guid}`);
+        return res.status(200).json({ message: 'Shipment Deleted' });
+      }
     } catch (error) {
       this.logger.error(`Error retrieving shipment: ${error.message}`);
       return res.status(error.status || 500).json({ error: error.message });
