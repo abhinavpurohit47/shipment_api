@@ -8,7 +8,6 @@ import {
 import { CreateShipment } from './createShipment.dto';
 import { generateGuid } from 'src/utils/guid.util';
 import { configDotenv } from 'dotenv';
-// import { calculateExpectedDays } from 'src/utils/days.util';
 import { UpdateShipment } from './updateShipment.dto';
 
 configDotenv();

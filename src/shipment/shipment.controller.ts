@@ -13,6 +13,7 @@ import { ShipmentService } from './shipment.service';
 import { Response } from 'express';
 import { CreateShipment } from './createShipment.dto';
 import { UpdateShipment } from './updateShipment.dto';
+import { CalculateExpectedDays } from '../utils/calculateDays';
 
 @Controller('shipment')
 export class ShipmentController {
@@ -70,6 +71,11 @@ export class ShipmentController {
   @Post('/create')
   async createShipment(@Body() shipment: CreateShipment, @Res() res: any) {
     try {
+      shipment.expected_no_of_days = CalculateExpectedDays(
+        shipment.ship_from_date,
+        shipment.ship_to_date,
+      );
+      console.log(shipment.expected_no_of_days);
       const createdShipment =
         await this.shipmentService.createShipment(shipment);
       this.logger.log(

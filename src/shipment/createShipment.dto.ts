@@ -32,8 +32,7 @@ export class CreateShipment {
   @IsNotEmpty()
   weight_unit: string;
 
-  @IsNotEmpty()
-  expected_no_of_days: number; // This property is now included for the calculated value
+  expected_no_of_days: number;
 
   @IsNotEmpty()
   ship_captain: string;
